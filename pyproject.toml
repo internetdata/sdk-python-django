@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "internetdata-django"
+dynamic = ["version"]
+description = "Official Django middleware for the InternetData API. Look up the visitor behind every request: location, network, VPN, proxy, Tor and hosting."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Mslm Dev", email = "support@internetdata.io" }]
+keywords = ["internetdata", "ip-geolocation", "ip-intelligence", "ip-lookup", "geoblocking", "vpn-detection", "proxy-detection", "tor", "hosting", "asn", "middleware", "django"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Internet",
+    "Topic :: Security",
+    "Typing :: Typed",
+]
+dependencies = ["internetdata>=2.12.0,<3", "django>=4.2"]
+
+[project.urls]
+Homepage = "https://internetdata.io"
+Source = "https://github.com/internetdata/sdk-python-django"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "mypy>=1.11", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/internetdata_django"]
+
+[tool.hatch.version]
+path = "src/internetdata_django/__init__.py"
+
+[tool.ruff]
+line-length = 96
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+# Django ships no py.typed marker and no inline stubs. django-stubs exists but pins a
+# Django version range, which would make this package refuse a Django it works fine on.
+[[tool.mypy.overrides]]
+module = ["django.*"]
+ignore_missing_imports = true
