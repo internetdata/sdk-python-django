@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.1 - 2026-11-14
+
+### Fixes
+
+- Require internetdata 2.12.1: a 403 can mean the key lacks the ip.lookup scope ([`6b8bf50`](https://github.com/internetdata/sdk-python-django/commit/6b8bf5023bad783e237a96667efb3d50063d5598))
+
 ## 1.0.0 - 2026-11-14
 
 ### Features
