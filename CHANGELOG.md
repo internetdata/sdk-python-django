@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.3 - 2026-11-19
+
+### Fixes
+
+- Require internetdata 2.15.2: a reduced answer is cached a minute at most ([`30ff032`](https://github.com/internetdata/sdk-python-django/commit/30ff032f4eab2163d3e36be9734f68384017fb00))
+
 ## 1.0.2 - 2026-11-19
 
 ### Fixes
