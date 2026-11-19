@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.2 - 2026-11-19
+
+### Fixes
+
+- Require internetdata 2.15.1: cap_reached on a paid answer past its overage cap ([`f25d51a`](https://github.com/internetdata/sdk-python-django/commit/f25d51a780e71773d5e6ac572e84577dc767db3f))
+
 ## 1.0.1 - 2026-11-14
 
 ### Fixes
