@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.5 - 2026-11-20
+
+### Features
+
+- Require internetdata 2.17.0: a paid domain answer's hosting, co-hosted domains, home page, redirects and backlinks ([`5e225a9`](https://github.com/internetdata/sdk-python-django/commit/5e225a963108481398382ace9dbc9391c4fb2987))
+
 ## 1.0.4 - 2026-11-20
 
 ### Features
