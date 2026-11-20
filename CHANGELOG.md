@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.4 - 2026-11-20
+
+### Features
+
+- Require internetdata 2.16.0: a tier, standing, license type, format or outcome the API adds reads as served ([`3502f2d`](https://github.com/internetdata/sdk-python-django/commit/3502f2da6db7da117e6d270e2a5998bee09ecaef))
+
 ## 1.0.3 - 2026-11-19
 
 ### Fixes
