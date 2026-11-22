@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.6 - 2026-11-22
+
+### Features
+
+- Require internetdata 2.18.0: whether a bot uses an address, and whose ([`8048709`](https://github.com/internetdata/sdk-python-django/commit/8048709ffc40e0e36ab7852bcacb6381dabb88d0))
+
 ## 1.0.5 - 2026-11-20
 
 ### Features
