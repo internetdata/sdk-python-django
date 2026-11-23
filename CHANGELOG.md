@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.7 - 2026-11-23
+
+### Fixes
+
+- Require internetdata 2.18.1: whose operator an unverified bot names ([`b92ac6f`](https://github.com/internetdata/sdk-python-django/commit/b92ac6ffbeecf385e0b124dac24ea992bef97467))
+
 ## 1.0.6 - 2026-11-22
 
 ### Features
