@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.0.8 - 2026-11-24
+
+### Features
+
+- Require internetdata 2.19.0: a block condition matches any element of a list member ([`b648ad5`](https://github.com/internetdata/sdk-python-django/commit/b648ad5eea7b02818bbde510438eab40be54ccb7))
+
 ## 1.0.7 - 2026-11-23
 
 ### Fixes
