@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.1.1 - 2026-11-26
+
+### Features
+
+- Require internetdata 2.21.0: a keyless answer without the bot, carrier, satellite and service flags reads ([`8bb6f0b`](https://github.com/internetdata/sdk-python-django/commit/8bb6f0bdf44891b61ab55cd0962d1ec3ef3148d4))
+
 ## 1.1.0 - 2026-11-25
 
 ### Features
