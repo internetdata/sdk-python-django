@@ -481,11 +481,16 @@ urlpatterns.append(path("guarded-hosting", guarded_hosting))
 
 
 def api_answering(
-    monkeypatch: pytest.MonkeyPatch, verdicts: dict[str, str] | None
+    monkeypatch: pytest.MonkeyPatch,
+    verdicts: dict[str, str] | None,
+    *,
+    verdict: str = "not_bot",
+    vouched: bool = True,
 ) -> list[str | None]:
-    """The API's host, answering every lookup as a match for ``{"is_hosting": True}`` and,
-    for a sent agent, with the verdict ``verdicts`` holds for it (None: no verdict, as
-    Unlimited answers). Returns the ``user_agent`` each lookup sent."""
+    """The API's host, answering every lookup as a match for ``{"is_hosting": True}``, with
+    the address's operator ``vouched`` for or not, and, for a sent agent, with the verdict
+    ``verdicts`` holds for it, ``verdict`` for any other (None: no verdict, as Unlimited
+    answers). Returns the ``user_agent`` each lookup sent."""
     sent: list[str | None] = []
 
     def handle(_transport: httpx.HTTPTransport, request: httpx.Request) -> httpx.Response:
@@ -494,9 +499,10 @@ def api_answering(
         agent = request.url.params.get("user_agent")
         sent.append(agent)
         body: dict[str, Any] = {**PAID, "ip": request.url.path.lstrip("/"), "is_hosting": True}
+        body["bot"] = {**PAID["bot"], "verified": vouched}
         if agent and verdicts is not None:
-            verdict = verdicts.get(agent, "not_bot")
-            body["user_agent"] = {"agent": "Googlebot", "kind": "bot", "verdict": verdict}
+            served = verdicts.get(agent, verdict)
+            body["user_agent"] = {"agent": "Googlebot", "kind": "bot", "verdict": served}
         return httpx.Response(200, json=body)
 
     monkeypatch.setattr(httpx.HTTPTransport, "handle_request", handle)
@@ -556,6 +562,49 @@ def test_a_condition_naming_the_verdict_refuses_a_forged_crawler(
         GOOGLEBOT, allow_bots=True, block_condition={"user_agent": {"verdict": "spoofed"}}
     )
 
+    assert status == 403
+
+
+def crawler(n: int) -> str:
+    return f"Mozilla/5.0 (compatible; Examplebot/{n}.0)"
+
+
+@pytest.mark.parametrize(("vouched", "fifth"), [(False, 403), (True, 200)])
+def test_one_address_is_looked_up_with_at_most_four_crawler_agents(
+    monkeypatch: pytest.MonkeyPatch, vouched: bool, fifth: int
+) -> None:
+    sent = api_answering(monkeypatch, {}, verdict="verified", vouched=vouched)
+    settings.INTERNETDATA = {
+        "client": InternetData(api_key="a-key", cache=False, retries=0),
+        "allow_bots": True,
+        "block_condition": {"is_hosting": True},
+    }
+    client = Client()
+
+    def status(agent: str, peer: str = PUBLIC_IP) -> int:
+        return int(client.get("/", REMOTE_ADDR=peer, HTTP_USER_AGENT=agent).status_code)
+
+    assert [status(crawler(n)) for n in range(1, 6)] == [200, 200, 200, 200, fifth]
+    assert status(crawler(1)) == 200, "a known agent is still sent"
+    assert status(crawler(5), "45.83.91.2") == 200, "another address has its own four"
+    assert sent == [
+        crawler(1),
+        crawler(2),
+        crawler(3),
+        crawler(4),
+        None,
+        crawler(1),
+        crawler(5),
+    ]
+
+
+def test_a_browsers_user_agent_is_not_sent(monkeypatch: pytest.MonkeyPatch) -> None:
+    sent = api_answering(monkeypatch, {}, verdict="verified")
+    browser = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/151.0.0.0"
+
+    status = visit(browser, allow_bots=True, block_condition={"is_hosting": True})
+
+    assert sent == [None]
     assert status == 403
 
 
