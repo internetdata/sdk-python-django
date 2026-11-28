@@ -2,6 +2,12 @@
 
 What each release changed for you, newest first. Each line is a commit's summary, linked to its full description and diff.
 
+## 1.1.3 - 2026-11-28
+
+### Features
+
+- Require internetdata 2.23.0: allow_bots sends only a crawler's User-Agent, at most four an address ([`2000dc1`](https://github.com/internetdata/sdk-python-django/commit/2000dc1c93fb5a6a58151f648e604c8fc8a376b9))
+
 ## 1.1.2 - 2026-11-27
 
 ### Features
